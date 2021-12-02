@@ -1,7 +1,12 @@
 <template>
   <div class="container">
-    <Header title="Task Tracker"/>
-    <Tasks :tasks="tasks"/>
+    <Header @toggle-add-task="toggleAddTask" title="Task Tracker"
+    :showAddTask="showAddTask"/>
+    <!--v-show 해당 버튼을 클릭할때만 작성이 보이도록 함 -->
+      <div v-show="showAddTask">
+        <AddTask @add-task="addTask"/>
+      </div>
+    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
     <!-- <Header /> -->
   </div>
   <!-- <div>
@@ -14,6 +19,7 @@
 //import HelloWorld from './components/HelloWorld.vue'
 import Header from './components/common/Header.vue'
 import Tasks from './components/Tasks.vue'
+import AddTask from './components/AddTask.vue'
 
 export default {
   name: 'App',
@@ -21,12 +27,45 @@ export default {
     //HelloWorld
     Header,
     Tasks,
+    AddTask,
   },
   data() {
     return {
-      tasks: []
+      tasks: [],
+      showAddTask: false
     }
   },
+
+  methods: {
+    //추가 버튼클릭시 보엿다 안보엿다하기
+    toggleAddTask() {
+      this.showAddTask = !this.showAddTask
+    },
+
+    //자식에서 받아서 함
+    addTask(task) {
+      this.tasks = [...this.tasks, task]
+    },
+
+
+    deleteTask(id) {
+      // console.log('task',id)
+      //같은 아이디에 해당하는 목록 삭제
+      if(confirm('정말 삭제?')) {
+        this.tasks = this.tasks.filter((task) => task.id !== id)
+      }
+    },
+
+    //더블클릭시 아이디를 가져온다
+    toggleReminder(id) {
+      // console.log(id)
+      //클릭시 reminder 모양 변화를 시킨다.
+      this.tasks = this.tasks.map((task) => 
+        task.id === id ? {...task, reminder: !task.reminder} : task
+      )
+    }
+  },
+  
   created() {
     //하드코딩
     this.tasks = [
