@@ -38,7 +38,7 @@ export default {
         }
 
         const newTask = {
-          id: Math.floor(Math.random() * 100000),
+          //id: Math.floor(Math.random() * 100000), 임시로 랜덤으로 생성해줌
           text: this.text,
           day: this.day,
           reminder: this.reminder
