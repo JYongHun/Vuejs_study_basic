@@ -1,7 +1,13 @@
 <template>
-    <div v-show="showAddTask">
+    <!-- <div v-show="showAddTask">
         <AddTask @add-task="addTask"/>
-      </div>
+      </div> -->
+
+    <!--div를 제거하여 사용함  -->
+    <AddTask 
+        v-show="showAddTask" 
+        @add-task="addTask"/>
+
     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
 </template>
 

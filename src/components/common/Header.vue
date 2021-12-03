@@ -5,6 +5,7 @@
     
     <!--버튼에 상태를 가져와서 효과를 변경할수있음 -->
     <Button 
+      v-show="homePage"
       @btn-click="$emit('toggle-add-task')" 
       :text="showAddTask ? 'Close' : 'Add Task'" 
       :color="showAddTask ? 'red' : 'green'"/>
@@ -31,6 +32,18 @@ import Button from './Button.vue'
     components: {
       Button,
     },
+
+    //computed 연산을 위해서 사용됨
+    //home 이 아닐때에는 addTask 버튼을 숨김
+    computed: {
+      homePage() {
+        if(this.$route.path === '/') {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
   }
 </script>
 
