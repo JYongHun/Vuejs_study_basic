@@ -3,11 +3,16 @@
     <Header @toggle-add-task="toggleAddTask" title="Task Tracker"
     :showAddTask="showAddTask"/>
     <!--v-show 해당 버튼을 클릭할때만 작성이 보이도록 함 -->
-      <div v-show="showAddTask">
+
+    <!--아래 코드 view home 으로 이동-->
+      <!-- <div v-show="showAddTask">
         <AddTask @add-task="addTask"/>
       </div>
-    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
-    <!-- <Header /> -->
+    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/> -->
+    
+    <!-- :콜론을 적어서 시동기를 걸어준다 -->
+    <router-view :showAddTask="showAddTask"></router-view>
+    <Footer />
   </div>
   <!-- <div>
     <img alt="Vue logo" src="./assets/images/logo.png">
@@ -18,20 +23,19 @@
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
 import Header from './components/common/Header.vue'
-import Tasks from './components/Tasks.vue'
-import AddTask from './components/AddTask.vue'
+import Footer from './components/common/Footer.vue'
+
 
 export default {
   name: 'App',
   components: {
     //HelloWorld
     Header,
-    Tasks,
-    AddTask,
+    Footer,
   },
   data() {
     return {
-      tasks: [],
+      // tasks: [],
       showAddTask: false
     }
   },
@@ -41,128 +45,7 @@ export default {
     toggleAddTask() {
       this.showAddTask = !this.showAddTask
     },
-
-    //자식에서 받아서 함
-    // addTask(task) {
-    //   this.tasks = [...this.tasks, task]
-    // },
-
-    //서버에 통신하여 추가해보기
-    async addTask(task) {
-      const res = await fetch('api/tasks',{
-        method: 'POST',
-        headers: {
-          'Content-Type' : 'application/json',
-        },
-        body: JSON.stringify(task)
-      })
-
-      const data = await res.json()
-
-      this.tasks = [...this.tasks, data]
-    },
-
-
-    // deleteTask(id) {
-    //   // console.log('task',id)
-    //   //같은 아이디에 해당하는 목록 삭제
-    //   if(confirm('정말 삭제?')) {
-    //     this.tasks = this.tasks.filter((task) => task.id !== id)
-    //   }
-    // },
-
-    async deleteTask(id) {
-
-      if(confirm('정말 삭제?')) {
-
-      const res = await fetch(`api/tasks/${id}`,{
-        method: 'DELETE',
-      })
-      res.status === 200 ? this.tasks = this.tasks.filter((task) => task.id !== id) :
-        alert('Error 삭제실패')
-
-        //this.tasks = this.tasks.filter((task) => task.id !== id)
-      }
-    },
-
-    // //더블클릭시 아이디를 가져온다
-    // toggleReminder(id) {
-    //   // console.log(id)
-    //   //클릭시 reminder 모양 변화를 시킨다.
-    //   this.tasks = this.tasks.map((task) => 
-    //     task.id === id ? {...task, reminder: !task.reminder} : task
-    //   )
-    // },
-
-
-    async toggleReminder(id) {
-      
-      const taskToToggle = await this.fetchTask(id)
-      const updTask = {...taskToToggle, reminder: !taskToToggle.reminder}
-
-      const res = await fetch(`api/tasks/${id}`,{
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updTask)
-      })
-
-      const data = await res.json()
-
-      this.tasks = this.tasks.map((task) => 
-        task.id === id ? {...task, reminder: data.reminder} : task
-      )
-    },
-
-    //api server 데이터 서버에서 받아오기 
-    //http://localhost:3000/tasks
-    async fetchTasks() {
-      const res = await fetch('api/tasks')
-      
-      const data = await res.json()
-
-      return data
-    },
-
-    //api server url param
-    async fetchTask(id) {
-      const res = await fetch(`api/tasks/${id}`)
-      
-      const data = await res.json()
-
-      return data
-    },
-  },
-
-  async created() {
-    this.tasks = await this.fetchTasks()
-  },
-  
-  //json-server로 변경
-  // created() {
-  //   //하드코딩
-  //   this.tasks = [
-  //     {
-  //       id: 1,
-  //       text: 'Doctors Appointment',
-  //       day: 'March 1st at 2:30pm',
-  //       reminder: true,
-  //     },
-  //     {
-  //       id: 2,
-  //       text: 'Meeting at School',
-  //       day: 'March 3rd at 1:30pm',
-  //       reminder: true,
-  //     },
-  //     {
-  //       id: 3,
-  //       text: 'Food Shopping',
-  //       day: 'March 3rd at 11:00am',
-  //       reminder: false,
-  //     }
-  //   ]
-  // }
+  }
 }
 </script>
 

@@ -7,22 +7,22 @@
       "reminder": true
     },
     {
-      "text": "Test",
-      "day": "ㅎㅎ",
-      "reminder": true,
-      "id": "WnddUV2"
-    },
-    {
       "text": "ㅋㅋ",
       "day": "ㅁㄴㅇㅁㄴㅇ124124",
       "reminder": false,
       "id": "3qVOVxA"
     },
     {
-      "text": "ㅓㅎ너",
-      "day": "ㅁㅁㅂㅂㅂㅂㅂㅂㅂ",
-      "reminder": true,
-      "id": "S0NebA3"
+      "text": "Test",
+      "day": "aa",
+      "reminder": false,
+      "id": "U0P4toh"
+    },
+    {
+      "text": "Test",
+      "day": "",
+      "reminder": false,
+      "id": "6ESehYM"
     }
   ]
 }
